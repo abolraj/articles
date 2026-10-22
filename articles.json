@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "linux-background-jobs",
+    "dir": "linux-background-jobs",
+    "date": "2026-10-22",
+    "defaultLang": "en",
+    "langs": [
+      "en",
+      "fa"
+    ],
+    "meta": {
+      "en": {
+        "title": "Linux Background Jobs",
+        "excerpt": "Background Jobs & systemd: A Practical Guide",
+        "dir": "ltr",
+        "date": "2026-10-22",
+        "hero": "linux-background-jobs/hero.png",
+        "heroAlt": null,
+        "heroCaption": null
+      },
+      "fa": {
+        "title": "کارهای پسزمینه در لینوکس",
+        "excerpt": "کارهای پسزمینه و systemd: یک راهنمای کاربردی",
+        "dir": "rtl",
+        "date": "2026-10-22",
+        "hero": "linux-background-jobs/hero.png",
+        "heroAlt": null,
+        "heroCaption": null
+      }
+    }
+  }
+]
