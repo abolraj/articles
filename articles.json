@@ -1,5 +1,35 @@
 [
   {
+    "slug": "vite-github-pages",
+    "dir": "vite-github-pages",
+    "date": "2026-11-07",
+    "defaultLang": "en",
+    "langs": [
+      "en",
+      "fa"
+    ],
+    "meta": {
+      "en": {
+        "title": "Vite Apps + Github Pages",
+        "excerpt": "Deploy Vite apps in Github pages",
+        "dir": "ltr",
+        "date": "2026-11-07",
+        "hero": "vite-github-pages/hero.png",
+        "heroAlt": null,
+        "heroCaption": null
+      },
+      "fa": {
+        "title": "اپلیکیشن‌های Vite + گیت‌هاب پیجز",
+        "excerpt": "انتشار اپلیکیشن‌های Vite در گیت‌هاب پیجز",
+        "dir": "rtl",
+        "date": "2026-11-07",
+        "hero": "vite-github-pages/hero.png",
+        "heroAlt": null,
+        "heroCaption": null
+      }
+    }
+  },
+  {
     "slug": "linux-background-jobs",
     "dir": "linux-background-jobs",
     "date": "2026-10-22",
