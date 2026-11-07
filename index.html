@@ -132,6 +132,13 @@
     font-size: 0.92rem;
   }
 
+  .head-controls {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
   .theme-btn {
     flex: none;
     width: 2.15rem;
@@ -149,8 +156,35 @@
   }
   .theme-btn:hover { color: var(--fg); border-color: var(--muted); }
 
+  /* ---------- view switch (list / grid) ---------- */
+  .view-switch {
+    display: inline-flex;
+    gap: 0.1rem;
+    padding: 0.15rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+  }
+
+  .view-pill {
+    display: grid;
+    place-items: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color .15s ease, background .15s ease;
+  }
+  .view-pill:hover { color: var(--fg); }
+  .view-pill.is-active { background: var(--accent-soft); color: var(--accent); }
+  .view-pill svg { width: 0.98rem; height: 0.98rem; display: block; }
+
   /* =========================================================
-     INDEX
+     INDEX — LIST
      ========================================================= */
   .post-list {
     list-style: none;
@@ -164,12 +198,16 @@
     display: block;
     padding: 1.05rem 1.15rem;
     border: 1px solid transparent;
-    border-radius: var(--radius);
+    border-top: 1px solid var(--line);
     color: inherit;
     text-decoration: none;
     transition: background .18s ease, border-color .18s ease;
   }
-  .post:hover { background: var(--card); border-color: var(--line); }
+  .post:hover { 
+    background: var(--card); 
+    border-color: var(--line); 
+    border-radius: var(--radius);
+  }
 
   .post-title {
     margin: 0;
@@ -201,6 +239,107 @@
     letter-spacing: 0.1em;
     color: var(--muted);
     opacity: 0.85;
+  }
+
+  /* =========================================================
+     INDEX — GRID (instagram-ish)
+     ========================================================= */
+  .post-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+    gap: 0.85rem;
+  }
+
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .post-card:hover,
+  .post-card:focus-visible {
+    border-color: var(--muted);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px -16px rgb(0 0 0 / .45);
+  }
+
+  .post-card .thumb {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--code-bg);
+    overflow: hidden;
+  }
+
+  .post-card .thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .post-card:hover .thumb img { transform: scale(1.045); }
+
+  /* no-image fallback */
+  .thumb-empty {
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    background:
+      radial-gradient(120% 120% at 12% 0%, var(--accent-soft) 0%, transparent 58%),
+      var(--code-bg);
+  }
+  .post-card:nth-child(2n) .thumb-empty {
+    background:
+      radial-gradient(120% 120% at 88% 100%, var(--accent-soft) 0%, transparent 58%),
+      var(--code-bg);
+  }
+  .post-card:nth-child(3n) .thumb-empty {
+    background:
+      radial-gradient(90% 90% at 50% 110%, var(--accent-soft) 0%, transparent 62%),
+      var(--code-bg);
+  }
+
+  .thumb-icon {
+    width: 2.1rem;
+    height: 2.1rem;
+    opacity: 0.45;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.7rem 0.8rem 0.8rem;
+  }
+
+  .post-card .post-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.97rem;
+    line-height: 1.35;
+  }
+
+  .post-card .post-date {
+    margin-top: 0;
+    font-size: 0.66rem;
+    letter-spacing: 0.07em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .post-card:hover,
+    .post-card:focus-visible { transform: none; }
+    .post-card:hover .thumb img { transform: none; }
   }
 
   /* =========================================================
@@ -535,7 +674,7 @@
      PRINT
      ========================================================= */
   @media print {
-    .theme-btn, .back, .copy, .lang-switch { display: none !important; }
+    .theme-btn, .back, .copy, .lang-switch, .view-switch { display: none !important; }
     body { background: #fff; color: #000; }
     .wrap { max-width: none; padding: 0; }
     .prose a { color: inherit; }
@@ -561,6 +700,32 @@ const SITE = {
 };
 
 const ARTICLES_BASE = 'articles';   // must match ARTICLES_BASE in build.js
+
+/* =========================================================
+   ICONS
+   ========================================================= */
+const ICON_LIST = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+  <path d="M9 6h11M9 12h11M9 18h11"/>
+  <circle cx="4.4" cy="6" r="1.3" fill="currentColor" stroke="none"/>
+  <circle cx="4.4" cy="12" r="1.3" fill="currentColor" stroke="none"/>
+  <circle cx="4.4" cy="18" r="1.3" fill="currentColor" stroke="none"/>
+</svg>`;
+
+const ICON_GRID = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+  <rect x="3.6" y="3.6" width="7" height="7" rx="1.6"/>
+  <rect x="13.4" y="3.6" width="7" height="7" rx="1.6"/>
+  <rect x="3.6" y="13.4" width="7" height="7" rx="1.6"/>
+  <rect x="13.4" y="13.4" width="7" height="7" rx="1.6"/>
+</svg>`;
+
+/* simple "photo" placeholder for articles without a hero image */
+const PHOTO_SVG = `<svg class="thumb-icon" viewBox="0 0 24 24" fill="none"
+  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+  aria-hidden="true" focusable="false">
+  <rect x="3" y="4.5" width="18" height="15" rx="2.5"/>
+  <circle cx="8.3" cy="9.8" r="1.5"/>
+  <path d="M20.5 16.2l-4.7-4.7-6.1 6.1"/>
+</svg>`;
 
 /* =========================================================
    HELPERS
@@ -651,18 +816,63 @@ function syncThemeButtons() {
 }
 
 /* =========================================================
+   VIEW MODE  (list | grid)
+   ========================================================= */
+const VIEW_KEY = 'view';
+
+function currentView() {
+  try {
+    const v = localStorage.getItem(VIEW_KEY);
+    if (v === 'grid' || v === 'list') return v;
+  } catch (_) {}
+  return 'list';
+}
+
+function setView(v) {
+  if (v !== 'grid' && v !== 'list') return;
+  try { localStorage.setItem(VIEW_KEY, v); } catch (_) {}
+  syncViewButtons();
+  // re-render only the index (article pages don't show the switch)
+  if (!new URLSearchParams(location.search).get('q')) renderIndex();
+}
+
+function syncViewButtons() {
+  const v = currentView();
+  document.querySelectorAll('[data-view]').forEach(btn => {
+    const on = btn.dataset.view === v;
+    btn.classList.toggle('is-active', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.title = btn.dataset.view === 'grid' ? 'Grid view' : 'List view';
+    btn.setAttribute('aria-label', btn.title);
+  });
+}
+
+/* =========================================================
    HEADER
    ========================================================= */
-function renderHeader(withDescription) {
+function renderHeader(withDescription, opts = {}) {
+  const showViewSwitch = !!opts.viewToggle;
+
   header.innerHTML = `
     <div>
       <a class="brand" href="./">${esc(SITE.title)}</a>
       ${withDescription && SITE.description
         ? `<p class="site-desc">${esc(SITE.description)}</p>` : ''}
     </div>
-    <button class="theme-btn" type="button" data-theme-btn onclick="cycleTheme()"></button>
+    <div class="head-controls">
+      ${showViewSwitch ? `
+        <div class="view-switch" role="group" aria-label="Layout">
+          <button class="view-pill" type="button" data-view="list"
+                  onclick="setView('list')">${ICON_LIST}</button>
+          <button class="view-pill" type="button" data-view="grid"
+                  onclick="setView('grid')">${ICON_GRID}</button>
+        </div>` : ''}
+      <button class="theme-btn" type="button" data-theme-btn onclick="cycleTheme()"></button>
+    </div>
   `;
+
   syncThemeButtons();
+  if (showViewSwitch) syncViewButtons();
 }
 
 /* =========================================================
@@ -691,11 +901,12 @@ function resetDir() {
    INDEX
    ========================================================= */
 async function renderIndex() {
-  renderHeader(true);
+  renderHeader(true, { viewToggle: true });
   resetDir();
   document.title = SITE.title;
   setMeta('description', SITE.description);
-  app.innerHTML = `<p class="status">Loading…</p>`;
+
+  if (!cache) app.innerHTML = `<p class="status">Loading…</p>`;
 
   try {
     const items = await getArticles();
@@ -708,30 +919,80 @@ async function renderIndex() {
       return;
     }
 
-    const nav = (navigator.language || '').split('-')[0].toLowerCase();
+    if (currentView() === 'grid') {
+      app.innerHTML = gridHtml(items);
+      attachThumbFallbacks();
+    } else {
+      app.innerHTML = listHtml(items);
+    }
+  } catch (err) {
+    showError(err);
+  }
+}
 
-    app.innerHTML = `<ul class="post-list">${items.map(item => {
-      const lang = item.meta[nav] ? nav : item.defaultLang;
-      const m    = item.meta[lang];
-      return `
-        <li>
-          <a class="post" href="?q=${encodeURIComponent(item.slug)}">
+/* ---------- list view ---------- */
+function listHtml(items) {
+  return `<ul class="post-list">${items.map(item => {
+    const lang = pickLang(item, null);
+    const m    = item.meta[lang];
+    return `
+      <li>
+        <a class="post" href="?q=${encodeURIComponent(item.slug)}">
+          <h2 class="post-title" lang="${esc(lang)}" dir="${esc(m.dir)}">${esc(m.title)}</h2>
+          ${item.date
+            ? `<time class="post-date" datetime="${esc(item.date)}">${esc(fmtDate(item.date))}</time>`
+            : ''}
+          ${m.excerpt
+            ? `<p class="post-excerpt" lang="${esc(lang)}" dir="${esc(m.dir)}">${esc(m.excerpt)}</p>`
+            : ''}
+          ${item.langs.length > 1
+            ? `<div class="post-langs">${item.langs.map(esc).join(' · ').toUpperCase()}</div>`
+            : ''}
+        </a>
+      </li>`;
+  }).join('')}</ul>`;
+}
+
+/* ---------- grid view (instagram-ish) ---------- */
+function gridHtml(items) {
+  return `<ul class="post-grid">${items.map(item => {
+    const lang = pickLang(item, null);
+    const m    = item.meta[lang];
+    const src  = heroSrc(m.hero);
+
+    const thumb = src
+      ? `<div class="thumb">
+           <img src="${esc(src)}" alt="" loading="lazy" decoding="async">
+         </div>`
+      : `<div class="thumb thumb-empty" aria-hidden="true">${PHOTO_SVG}</div>`;
+
+    return `
+      <li>
+        <a class="post-card" href="?q=${encodeURIComponent(item.slug)}"
+           title="${esc(m.title)}">
+          ${thumb}
+          <div class="card-body">
             <h2 class="post-title" lang="${esc(lang)}" dir="${esc(m.dir)}">${esc(m.title)}</h2>
             ${item.date
               ? `<time class="post-date" datetime="${esc(item.date)}">${esc(fmtDate(item.date))}</time>`
               : ''}
-            ${m.excerpt
-              ? `<p class="post-excerpt" lang="${esc(lang)}" dir="${esc(m.dir)}">${esc(m.excerpt)}</p>`
-              : ''}
-            ${item.langs.length > 1
-              ? `<div class="post-langs">${item.langs.map(esc).join(' · ').toUpperCase()}</div>`
-              : ''}
-          </a>
-        </li>`;
-    }).join('')}</ul>`;
-  } catch (err) {
-    showError(err);
-  }
+          </div>
+        </a>
+      </li>`;
+  }).join('')}</ul>`;
+}
+
+/* if a hero image 404s, degrade gracefully to the placeholder */
+function attachThumbFallbacks() {
+  app.querySelectorAll('.post-card .thumb img').forEach(img => {
+    img.addEventListener('error', () => {
+      const thumb = img.closest('.thumb');
+      if (!thumb) return;
+      thumb.classList.add('thumb-empty');
+      thumb.setAttribute('aria-hidden', 'true');
+      thumb.innerHTML = PHOTO_SVG;
+    }, { once: true });
+  });
 }
 
 /* =========================================================
@@ -930,6 +1191,12 @@ function showError(err) {
 const params = new URLSearchParams(location.search);
 const q      = params.get('q');
 const langQ  = params.get('lang');
+
+// allow deep-linking a layout: ?view=grid
+const viewQ = params.get('view');
+if (viewQ === 'grid' || viewQ === 'list') {
+  try { localStorage.setItem(VIEW_KEY, viewQ); } catch (_) {}
+}
 
 q ? renderArticle(q, langQ) : renderIndex();
 </script>
