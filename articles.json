@@ -1,7 +1,7 @@
 [
   {
-    "slug": "linux-background-jobs",
-    "dir": "linux-background-jobs",
+    "slug": "tauri-android",
+    "dir": "tauri-android",
     "date": "2026-11-18",
     "defaultLang": "en",
     "langs": [
@@ -14,36 +14,6 @@
         "excerpt": "A complete, sanction-proof workflow for Iranian beginners — including Myket's offline SDK CSV method",
         "dir": "ltr",
         "date": "2026-11-18",
-        "hero": "linux-background-jobs/hero.png",
-        "heroAlt": null,
-        "heroCaption": null
-      },
-      "fa": {
-        "title": "کارهای پسزمینه در لینوکس",
-        "excerpt": "کارهای پسزمینه و systemd: یک راهنمای کاربردی",
-        "dir": "rtl",
-        "date": "2026-10-22",
-        "hero": "linux-background-jobs/hero.png",
-        "heroAlt": null,
-        "heroCaption": null
-      }
-    }
-  },
-  {
-    "slug": "tauri-android",
-    "dir": "tauri-android",
-    "date": "2026-11-18",
-    "defaultLang": "en",
-    "langs": [
-      "en",
-      "fa"
-    ],
-    "meta": {
-      "en": {
-        "title": "tauri android",
-        "excerpt": "A Complete, Sanction-Proof Workflow for Iranian Beginners — including Myket's offline SDK CSV method --- 1. What Is Tauri? (Rust + Web = Cross-Platform) Taur…",
-        "dir": "ltr",
-        "date": null,
         "hero": "tauri-android/hero.png",
         "heroAlt": null,
         "heroCaption": null
@@ -84,6 +54,36 @@
         "dir": "rtl",
         "date": "2026-11-07",
         "hero": "vite-github-pages/hero.png",
+        "heroAlt": null,
+        "heroCaption": null
+      }
+    }
+  },
+  {
+    "slug": "linux-background-jobs",
+    "dir": "linux-background-jobs",
+    "date": "2026-10-22",
+    "defaultLang": "en",
+    "langs": [
+      "en",
+      "fa"
+    ],
+    "meta": {
+      "en": {
+        "title": "Linux Background Jobs",
+        "excerpt": "Background Jobs & systemd: A Practical Guide",
+        "dir": "ltr",
+        "date": "2026-10-22",
+        "hero": "linux-background-jobs/hero.png",
+        "heroAlt": null,
+        "heroCaption": null
+      },
+      "fa": {
+        "title": "کارهای پسزمینه در لینوکس",
+        "excerpt": "کارهای پسزمینه و systemd: یک راهنمای کاربردی",
+        "dir": "rtl",
+        "date": "2026-10-22",
+        "hero": "linux-background-jobs/hero.png",
         "heroAlt": null,
         "heroCaption": null
       }
