@@ -44,7 +44,7 @@
         "excerpt": "A complete, sanction-proof workflow for Iranian beginners — including Myket's offline SDK CSV method",
         "dir": "ltr",
         "date": "2026-11-18",
-        "hero": "tauri-android/hero.png",
+        "hero": "tauri-android/hero.webp",
         "heroAlt": null,
         "heroCaption": null
       },
@@ -53,7 +53,7 @@
         "excerpt": "گردش‌کار کامل و مقاوم در برابر تحریم برای تازه‌کارهای ایرانی — شامل روش نصب آفلاین SDK با CSV مایکت",
         "dir": "rtl",
         "date": "2026-11-18",
-        "hero": "tauri-android/hero.png",
+        "hero": "tauri-android/hero.webp",
         "heroAlt": null,
         "heroCaption": null
       }
@@ -74,7 +74,7 @@
         "excerpt": "Deploy Vite apps in Github pages",
         "dir": "ltr",
         "date": "2026-11-07",
-        "hero": "vite-github-pages/hero.png",
+        "hero": "vite-github-pages/hero.webp",
         "heroAlt": null,
         "heroCaption": null
       },
@@ -83,7 +83,7 @@
         "excerpt": "انتشار اپلیکیشن‌های Vite در گیت‌هاب پیجز",
         "dir": "rtl",
         "date": "2026-11-07",
-        "hero": "vite-github-pages/hero.png",
+        "hero": "vite-github-pages/hero.webp",
         "heroAlt": null,
         "heroCaption": null
       }
@@ -104,7 +104,7 @@
         "excerpt": "Background Jobs & systemd: A Practical Guide",
         "dir": "ltr",
         "date": "2026-10-22",
-        "hero": "linux-background-jobs/hero.png",
+        "hero": "linux-background-jobs/hero.webp",
         "heroAlt": null,
         "heroCaption": null
       },
@@ -113,7 +113,7 @@
         "excerpt": "کارهای پسزمینه و systemd: یک راهنمای کاربردی",
         "dir": "rtl",
         "date": "2026-10-22",
-        "hero": "linux-background-jobs/hero.png",
+        "hero": "linux-background-jobs/hero.webp",
         "heroAlt": null,
         "heroCaption": null
       }
