@@ -1,5 +1,35 @@
 [
   {
+    "slug": "android-adb",
+    "dir": "android-adb",
+    "date": "2026-11-21",
+    "defaultLang": "en",
+    "langs": [
+      "en",
+      "fa"
+    ],
+    "meta": {
+      "en": {
+        "title": "The Complete ADB Command Reference for Android Development",
+        "excerpt": "ADB Android",
+        "dir": "ltr",
+        "date": "2026-11-21",
+        "hero": "android-adb/hero.webp",
+        "heroAlt": null,
+        "heroCaption": null
+      },
+      "fa": {
+        "title": "مرجع کامل دستورات ADB برای توسعه‌ی اندروید",
+        "excerpt": "ADB برای توسعه‌ی اندروید",
+        "dir": "rtl",
+        "date": "2026-11-21",
+        "hero": "android-adb/hero.webp",
+        "heroAlt": null,
+        "heroCaption": null
+      }
+    }
+  },
+  {
     "slug": "tauri-android",
     "dir": "tauri-android",
     "date": "2026-11-18",
