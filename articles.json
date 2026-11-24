@@ -13,7 +13,7 @@
         "excerpt": "فصل اول ریاضی عمومی ۱ به زبان ساده؛ ۹ اصل موضوعه، مفهوم میدان، آخرین قضیه‌ی فرما و ساخت اعداد مختلط به صورت زوج مرتب",
         "dir": "rtl",
         "date": "2026-11-24",
-        "hero": null,
+        "hero": "fum-math-1-1-complex/hero.webp",
         "heroAlt": null,
         "heroCaption": null
       }
@@ -33,7 +33,7 @@
         "excerpt": "معرفی ۸ فصل ریاضی عمومی ۱ به زبان ساده، با تمرکز بر مفهوم و کاربرد، همراه با کتاب‌های پیشنهادی",
         "dir": "rtl",
         "date": "2026-11-24",
-        "hero": null,
+        "hero": "fum-math-1/hero.webp",
         "heroAlt": null,
         "heroCaption": null
       }
@@ -154,26 +154,6 @@
         "dir": "rtl",
         "date": "2026-10-22",
         "hero": "linux-background-jobs/hero.webp",
-        "heroAlt": null,
-        "heroCaption": null
-      }
-    }
-  },
-  {
-    "slug": "fum-common-math-1-1",
-    "dir": "fum-common-math-1-1",
-    "date": null,
-    "defaultLang": "fa",
-    "langs": [
-      "fa"
-    ],
-    "meta": {
-      "fa": {
-        "title": "دستگاه اعداد حقیقی",
-        "excerpt": "ساختن اعداد حقیقی از روی اصول موضوعه‌ی جمع، ضرب، توزیع‌پذیری و ترتیب، همراه با توضیح مفهوم گروه آبلی، مثال‌ها و تمرین (ریاضی عمومی ۱).",
-        "dir": "rtl",
-        "date": null,
-        "hero": null,
         "heroAlt": null,
         "heroCaption": null
       }
