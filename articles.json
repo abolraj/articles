@@ -1,5 +1,45 @@
 [
   {
+    "slug": "fum-math-1-1-complex",
+    "dir": "fum-math-1-1-complex",
+    "date": "2026-11-24",
+    "defaultLang": "fa",
+    "langs": [
+      "fa"
+    ],
+    "meta": {
+      "fa": {
+        "title": "اعداد مختلط از صفر؛ از اصول موضوعه‌ی R تا میدان C",
+        "excerpt": "فصل اول ریاضی عمومی ۱ به زبان ساده؛ ۹ اصل موضوعه، مفهوم میدان، آخرین قضیه‌ی فرما و ساخت اعداد مختلط به صورت زوج مرتب",
+        "dir": "rtl",
+        "date": "2026-11-24",
+        "hero": null,
+        "heroAlt": null,
+        "heroCaption": null
+      }
+    }
+  },
+  {
+    "slug": "fum-math-1",
+    "dir": "fum-math-1",
+    "date": "2026-11-24",
+    "defaultLang": "fa",
+    "langs": [
+      "fa"
+    ],
+    "meta": {
+      "fa": {
+        "title": "نقشه راه کامل ریاضی عمومی ۱ برای دانشجویان",
+        "excerpt": "معرفی ۸ فصل ریاضی عمومی ۱ به زبان ساده، با تمرکز بر مفهوم و کاربرد، همراه با کتاب‌های پیشنهادی",
+        "dir": "rtl",
+        "date": "2026-11-24",
+        "hero": null,
+        "heroAlt": null,
+        "heroCaption": null
+      }
+    }
+  },
+  {
     "slug": "android-adb",
     "dir": "android-adb",
     "date": "2026-11-21",
