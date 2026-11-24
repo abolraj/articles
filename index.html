@@ -1,725 +1,979 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<title>Articles</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Articles</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
 
-<script>
-  // apply saved theme + lang dir before first paint (no flash)
-  (function () {
-    try {
-      var t = localStorage.getItem('theme');
-      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-    } catch (_) {}
-    var p = new URLSearchParams(location.search);
-    var l = p.get('lang');
-    if (l) {
-      var rtl = /^(ar|arc|ckb|dv|fa|ha|he|khw|ks|prs|ps|sam|sd|ug|ur|yi)(-|$)/i.test(l);
-      document.documentElement.lang = l;
-      document.documentElement.dir  = rtl ? 'rtl' : 'ltr';
-    }
-  })();
-</script>
+  <!-- Vazirmatn (Persian/Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;650;700&display=swap">
 
-<style>
-  /* =========================================================
+  <!-- KaTeX stylesheet (math) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+
+  <script>
+    // apply saved theme + lang dir before first paint (no flash)
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (_) { }
+      var p = new URLSearchParams(location.search);
+      var l = p.get('lang');
+      if (l) {
+        var rtl = /^(ar|arc|ckb|dv|fa|ha|he|khw|ks|prs|ps|sam|sd|ug|ur|yi)(-|$)/i.test(l);
+        document.documentElement.lang = l;
+        document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+      }
+    })();
+  </script>
+
+  <style>
+    /* =========================================================
      TOKENS
      ========================================================= */
-  *, *::before, *::after { box-sizing: border-box; }
-
-  :root {
-    color-scheme: light dark;
-
-    --bg:          #fbf9f6;
-    --fg:          #1e1c19;
-    --muted:       #6d6861;
-    --line:        #e7e1d7;
-    --card:        #ffffff;
-    --accent:      #b45309;
-    --accent-soft: #f3e6d6;
-    --code-bg:     #f4f0ea;
-
-    --radius: 14px;
-    --maxw: 44rem;
-    --sans:  "Vazirmatn", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --serif: "Vazirmatn", ui-serif, Georgia, Cambria, "Noto Naskh Arabic", "Times New Roman", Times, serif;
-    --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-      --bg:          #131211;
-      --fg:          #ecebe7;
-      --muted:       #a09a90;
-      --line:        #2b2926;
-      --card:        #1a1917;
-      --accent:      #e2a75c;
-      --accent-soft: #2a2219;
-      --code-bg:     #1c1b18;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
-  }
 
-  :root[data-theme="dark"] {
-    color-scheme: dark;
-    --bg:          #131211;
-    --fg:          #ecebe7;
-    --muted:       #a09a90;
-    --line:        #2b2926;
-    --card:        #1a1917;
-    --accent:      #e2a75c;
-    --accent-soft: #2a2219;
-    --code-bg:     #1c1b18;
-  }
+    :root {
+      color-scheme: light dark;
 
-  /* =========================================================
+      --bg: #fbf9f6;
+      --fg: #1e1c19;
+      --muted: #6d6861;
+      --line: #e7e1d7;
+      --card: #ffffff;
+      --accent: #b45309;
+      --accent-soft: #f3e6d6;
+      --code-bg: #f4f0ea;
+
+      --radius: 14px;
+      --maxw: 44rem;
+      --sans: "Vazirmatn", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --serif: "Vazirmatn", ui-serif, Georgia, Cambria, "Noto Naskh Arabic", "Times New Roman", Times, serif;
+      --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #131211;
+        --fg: #ecebe7;
+        --muted: #a09a90;
+        --line: #2b2926;
+        --card: #1a1917;
+        --accent: #e2a75c;
+        --accent-soft: #2a2219;
+        --code-bg: #1c1b18;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #131211;
+      --fg: #ecebe7;
+      --muted: #a09a90;
+      --line: #2b2926;
+      --card: #1a1917;
+      --accent: #e2a75c;
+      --accent-soft: #2a2219;
+      --code-bg: #1c1b18;
+    }
+
+    /* =========================================================
+     LOCALIZED LIST NUMBERS
+     ========================================================= */
+    @counter-style fa-digits {
+      system: numeric;
+      symbols: "۰" "۱" "۲" "۳" "۴" "۵" "۶" "۷" "۸" "۹";
+      suffix: ". ";
+    }
+
+    @counter-style ar-digits {
+      system: numeric;
+      symbols: "٠" "١" "٢" "٣" "٤" "٥" "٦" "٧" "٨" "٩";
+      suffix: ". ";
+    }
+
+    /* =========================================================
      BASE
      ========================================================= */
-  html { -webkit-text-size-adjust: 100%; }
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
 
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: var(--sans);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-  ::selection { background: var(--accent-soft); }
+    ::selection {
+      background: var(--accent-soft);
+    }
 
-  a { color: var(--accent); text-underline-offset: 2px; }
+    a {
+      color: var(--accent);
+      text-underline-offset: 2px;
+    }
 
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
 
-  .wrap {
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: clamp(1.75rem, 5vw, 3.5rem) 1.25rem 6rem;
-  }
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: clamp(1.75rem, 5vw, 3.5rem) 1.25rem 6rem;
+    }
 
-  /* =========================================================
+    /* =========================================================
      SITE HEADER
      ========================================================= */
-  .site-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 2.25rem;
-  }
+    .site-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2.25rem;
+    }
 
-  .brand {
-    font-size: 1.05rem;
-    font-weight: 650;
-    letter-spacing: -0.015em;
-    color: var(--fg);
-    text-decoration: none;
-  }
-  .brand:hover { color: var(--accent); }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+      color: var(--fg);
+      text-decoration: none;
+    }
 
-  .site-desc {
-    margin: 0.35rem 0 0;
-    color: var(--muted);
-    font-size: 0.92rem;
-  }
+    .brand:hover {
+      color: var(--accent);
+    }
 
-  .head-controls {
-    flex: none;
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-  }
+    .site-desc {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
 
-  .theme-btn {
-    flex: none;
-    width: 2.15rem;
-    height: 2.15rem;
-    display: grid;
-    place-items: center;
-    font-size: 0.95rem;
-    line-height: 1;
-    border: 1px solid var(--line);
-    border-radius: 50%;
-    background: var(--card);
-    color: var(--muted);
-    cursor: pointer;
-    transition: color .15s ease, border-color .15s ease, background .15s ease;
-  }
-  .theme-btn:hover { color: var(--fg); border-color: var(--muted); }
+    .head-controls {
+      flex: none;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
 
-  /* ---------- view switch (list / grid) ---------- */
-  .view-switch {
-    display: inline-flex;
-    gap: 0.1rem;
-    padding: 0.15rem;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--card);
-  }
+    .theme-btn {
+      flex: none;
+      width: 2.15rem;
+      height: 2.15rem;
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+      line-height: 1;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: var(--card);
+      color: var(--muted);
+      cursor: pointer;
+      transition: color .15s ease, border-color .15s ease, background .15s ease;
+    }
 
-  .view-pill {
-    display: grid;
-    place-items: center;
-    width: 1.8rem;
-    height: 1.8rem;
-    padding: 0;
-    border: 0;
-    border-radius: 999px;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    transition: color .15s ease, background .15s ease;
-  }
-  .view-pill:hover { color: var(--fg); }
-  .view-pill.is-active { background: var(--accent-soft); color: var(--accent); }
-  .view-pill svg { width: 0.98rem; height: 0.98rem; display: block; }
+    .theme-btn:hover {
+      color: var(--fg);
+      border-color: var(--muted);
+    }
 
-  /* =========================================================
+    /* ---------- view switch (list / grid) ---------- */
+    .view-switch {
+      display: inline-flex;
+      gap: 0.1rem;
+      padding: 0.15rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card);
+    }
+
+    .view-pill {
+      display: grid;
+      place-items: center;
+      width: 1.8rem;
+      height: 1.8rem;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color .15s ease, background .15s ease;
+    }
+
+    .view-pill:hover {
+      color: var(--fg);
+    }
+
+    .view-pill.is-active {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .view-pill svg {
+      width: 0.98rem;
+      height: 0.98rem;
+      display: block;
+    }
+
+    /* =========================================================
      INDEX — LIST
      ========================================================= */
-  .post-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.4rem;
-  }
+    .post-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.4rem;
+    }
 
-  .post {
-    display: block;
-    padding: 1.05rem 1.15rem;
-    border: 1px solid transparent;
-    border-top: 1px solid var(--line);
-    color: inherit;
-    text-decoration: none;
-    transition: background .18s ease, border-color .18s ease;
-  }
-  .post:hover { 
-    background: var(--card); 
-    border-color: var(--line); 
-    border-radius: var(--radius);
-  }
+    .post {
+      display: block;
+      padding: 1.05rem 1.15rem;
+      border: 1px solid transparent;
+      border-top: 1px solid var(--line);
+      color: inherit;
+      text-decoration: none;
+      transition: background .18s ease, border-color .18s ease;
+    }
 
-  .post-title {
-    margin: 0;
-    font-size: 1.08rem;
-    font-weight: 650;
-    letter-spacing: -0.012em;
-    line-height: 1.35;
-  }
+    .post:hover {
+      background: var(--card);
+      border-color: var(--line);
+      border-radius: var(--radius);
+    }
 
-  .post-date {
-    display: block;
-    margin-top: 0.3rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+    .post-title {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 650;
+      letter-spacing: -0.012em;
+      line-height: 1.35;
+    }
 
-  .post-excerpt {
-    margin: 0.5rem 0 0;
-    font-size: 0.93rem;
-    line-height: 1.55;
-    color: var(--muted);
-  }
+    .post-date {
+      display: block;
+      margin-top: 0.3rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-  .post-langs {
-    margin-top: 0.55rem;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    opacity: 0.85;
-  }
+    .post-excerpt {
+      margin: 0.5rem 0 0;
+      font-size: 0.93rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
 
-  /* =========================================================
+    .post-langs {
+      margin-top: 0.55rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      opacity: 0.85;
+    }
+
+    /* =========================================================
      INDEX — GRID (instagram-ish)
      ========================================================= */
-  .post-grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
-    gap: 0.85rem;
-  }
+    .post-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(20rem, 100%), 1fr));
+      gap: 0.85rem;
+    }
 
-  .post-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--card);
-    overflow: hidden;
-    color: inherit;
-    text-decoration: none;
-    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-  }
-  .post-card:hover,
-  .post-card:focus-visible {
-    border-color: var(--muted);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 26px -16px rgb(0 0 0 / .45);
-  }
+    .post-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
 
-  .post-card .thumb {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    background: var(--code-bg);
-    overflow: hidden;
-  }
-
-  .post-card .thumb img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform .4s ease;
-  }
-  .post-card:hover .thumb img { transform: scale(1.045); }
-
-  /* no-image fallback */
-  .thumb-empty {
-    display: grid;
-    place-items: center;
-    color: var(--muted);
-    background:
-      radial-gradient(120% 120% at 12% 0%, var(--accent-soft) 0%, transparent 58%),
-      var(--code-bg);
-  }
-  .post-card:nth-child(2n) .thumb-empty {
-    background:
-      radial-gradient(120% 120% at 88% 100%, var(--accent-soft) 0%, transparent 58%),
-      var(--code-bg);
-  }
-  .post-card:nth-child(3n) .thumb-empty {
-    background:
-      radial-gradient(90% 90% at 50% 110%, var(--accent-soft) 0%, transparent 62%),
-      var(--code-bg);
-  }
-
-  .thumb-icon {
-    width: 2.1rem;
-    height: 2.1rem;
-    opacity: 0.45;
-  }
-
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    padding: 0.7rem 0.8rem 0.8rem;
-  }
-
-  .post-card .post-title {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-size: 0.97rem;
-    line-height: 1.35;
-  }
-
-  .post-card .post-date {
-    margin-top: 0;
-    font-size: 0.66rem;
-    letter-spacing: 0.07em;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
     .post-card:hover,
-    .post-card:focus-visible { transform: none; }
-    .post-card:hover .thumb img { transform: none; }
-  }
+    .post-card:focus-visible {
+      border-color: var(--muted);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px -16px rgb(0 0 0 / .45);
+    }
 
-  /* =========================================================
+    .post-card .thumb {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: var(--code-bg);
+      overflow: hidden;
+    }
+
+    .post-card .thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+
+    .post-card:hover .thumb img {
+      transform: scale(1.045);
+    }
+
+    /* no-image fallback */
+    .thumb-empty {
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      background:
+        radial-gradient(120% 120% at 12% 0%, var(--accent-soft) 0%, transparent 58%),
+        var(--code-bg);
+    }
+
+    .post-card:nth-child(2n) .thumb-empty {
+      background:
+        radial-gradient(120% 120% at 88% 100%, var(--accent-soft) 0%, transparent 58%),
+        var(--code-bg);
+    }
+
+    .post-card:nth-child(3n) .thumb-empty {
+      background:
+        radial-gradient(90% 90% at 50% 110%, var(--accent-soft) 0%, transparent 62%),
+        var(--code-bg);
+    }
+
+    .thumb-icon {
+      width: 2.1rem;
+      height: 2.1rem;
+      opacity: 0.45;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.7rem 0.8rem 0.8rem;
+    }
+
+    .post-card .post-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 0.97rem;
+      line-height: 1.35;
+    }
+
+    .post-card .post-date {
+      margin-top: 0;
+      font-size: 0.66rem;
+      letter-spacing: 0.07em;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .post-card:hover,
+      .post-card:focus-visible {
+        transform: none;
+      }
+
+      .post-card:hover .thumb img {
+        transform: none;
+      }
+    }
+
+    /* =========================================================
      ARTICLE TOP BAR
      ========================================================= */
-  .article-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
+    .article-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
 
-  .back {
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.88rem;
-    color: var(--muted);
-    text-decoration: none;
-  }
-  .back:hover { color: var(--accent); }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
 
-  .back .arrow {
-    display: inline-block;
-    margin-inline-end: 0.4em;
-    transition: transform .2s ease;
-  }
-  .back:hover .arrow { transform: translateX(-2px); }
-  [dir="rtl"] .back .arrow { transform: scaleX(-1); }
-  [dir="rtl"] .back:hover .arrow { transform: scaleX(-1) translateX(-2px); }
+    .back:hover {
+      color: var(--accent);
+    }
 
-  .lang-switch {
-    display: inline-flex;
-    gap: 0.15rem;
-    padding: 0.15rem;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: var(--card);
-  }
+    .back .arrow {
+      display: inline-block;
+      margin-inline-end: 0.4em;
+      transition: transform .2s ease;
+    }
 
-  .lang-pill {
-    display: inline-block;
-    padding: 0.22rem 0.55rem;
-    font-size: 0.68rem;
-    font-weight: 650;
-    letter-spacing: 0.08em;
-    text-decoration: none;
-    color: var(--muted);
-    border-radius: 999px;
-    transition: color .15s ease, background .15s ease;
-  }
-  .lang-pill:hover { color: var(--fg); }
-  .lang-pill.is-active {
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
+    .back:hover .arrow {
+      transform: translateX(-2px);
+    }
 
-  /* =========================================================
+    [dir="rtl"] .back .arrow {
+      transform: scaleX(-1);
+    }
+
+    [dir="rtl"] .back:hover .arrow {
+      transform: scaleX(-1) translateX(-2px);
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      gap: 0.15rem;
+      padding: 0.15rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card);
+    }
+
+    .lang-pill {
+      display: inline-block;
+      padding: 0.22rem 0.55rem;
+      font-size: 0.68rem;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      color: var(--muted);
+      border-radius: 999px;
+      transition: color .15s ease, background .15s ease;
+    }
+
+    .lang-pill:hover {
+      color: var(--fg);
+    }
+
+    .lang-pill.is-active {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    /* =========================================================
      ARTICLE HEADER
      ========================================================= */
-  .article-head {
-    margin: 1.25rem 0 1.75rem;
-    padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--line);
-  }
+    .article-head {
+      margin: 1.25rem 0 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--line);
+    }
 
-  .article-head h1 {
-    font-family: var(--serif);
-    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
-    font-weight: 650;
-    line-height: 1.2;
-    letter-spacing: -0.025em;
-    margin: 0 0 0.6rem;
-  }
+    .article-head h1 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+      font-weight: 650;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      margin: 0 0 0.6rem;
+    }
 
-  .article-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-  /* ---------- hero (optional) ---------- */
-  .hero {
-    margin: 0 0 2rem;
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-  }
+    /* ---------- hero (optional) ---------- */
+    .hero {
+      margin: 0 0 2rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--code-bg);
+      border: 1px solid var(--line);
+    }
 
-  .hero img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 26rem;
-    object-fit: cover;
-  }
+    .hero img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 26rem;
+      object-fit: cover;
+    }
 
-  .hero figcaption {
-    padding: 0.6rem 0.9rem;
-    font-family: var(--sans);
-    font-size: 0.78rem;
-    line-height: 1.45;
-    color: var(--muted);
-    border-top: 1px solid var(--line);
-  }
+    .hero figcaption {
+      padding: 0.6rem 0.9rem;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
 
-  /* =========================================================
+    /* =========================================================
      PROSE
      ========================================================= */
-  .prose {
-    font-family: var(--serif);
-    font-size: 1.075rem;
-    line-height: 1.75;
-    overflow-wrap: break-word;
-  }
+    .prose {
+      font-family: var(--serif);
+      font-size: 1.075rem;
+      line-height: 1.75;
+      overflow-wrap: break-word;
+    }
 
-  .prose:lang(fa),
-  .prose:lang(ar),
-  .prose:lang(he),
-  .prose:lang(ur),
-  .prose:lang(ps),
-  .prose:lang(sd) {
-    font-family: "Vazirmatn", "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, var(--sans);
-    line-height: 1.85;
-  }
+    .prose:lang(fa),
+    .prose:lang(ar),
+    .prose:lang(he),
+    .prose:lang(ur),
+    .prose:lang(ps),
+    .prose:lang(sd) {
+      font-family: "Vazirmatn", "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, var(--sans);
+      line-height: 1.85;
+    }
 
-  .prose > :first-child { margin-top: 0; }
-  .prose > :last-child  { margin-bottom: 0; }
+    .prose> :first-child {
+      margin-top: 0;
+    }
 
-  .prose p { margin: 1.1em 0; }
+    .prose> :last-child {
+      margin-bottom: 0;
+    }
 
-  .prose h1, .prose h2, .prose h3,
-  .prose h4, .prose h5, .prose h6 {
-    font-family: var(--serif);
-    line-height: 1.3;
-    letter-spacing: -0.015em;
-    font-weight: 650;
-    margin: 2.1em 0 0.6em;
-  }
-  .prose h1 { font-size: 1.85rem; }
-  .prose h2 {
-    font-size: 1.42rem;
-    padding-bottom: 0.28em;
-    border-bottom: 1px solid var(--line);
-  }
-  .prose h3 { font-size: 1.2rem; }
-  .prose h4 { font-size: 1.04rem; }
-  .prose h5, .prose h6 {
-    font-size: 0.95rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
+    .prose p {
+      margin: 1.1em 0;
+    }
 
-  .prose a {
-    color: var(--accent);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-  }
-  .prose a:hover { text-decoration-thickness: 2px; }
+    .prose h1,
+    .prose h2,
+    .prose h3,
+    .prose h4,
+    .prose h5,
+    .prose h6 {
+      font-family: var(--serif);
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      font-weight: 650;
+      margin: 2.1em 0 0.6em;
+    }
 
-  .prose strong { font-weight: 650; }
-  .prose em { font-style: italic; }
+    .prose h1 {
+      font-size: 1.85rem;
+    }
 
-  .prose ul, .prose ol {
-    margin: 1.1em 0;
-    padding-inline-start: 1.45em;
-  }
-  .prose li { margin: 0.35em 0; }
-  .prose li::marker { color: var(--muted); }
-  .prose li > ul, .prose li > ol { margin: 0.35em 0; }
+    .prose h2 {
+      font-size: 1.42rem;
+      padding-bottom: 0.28em;
+      border-bottom: 1px solid var(--line);
+    }
 
-  .prose blockquote {
-    margin: 1.6em 0;
-    padding-block: 0.15em;
-    padding-inline-start: 1.15em;
-    border-inline-start: 3px solid var(--accent);
-    color: var(--muted);
-    font-style: italic;
-  }
-  .prose blockquote p { margin: 0.5em 0; }
+    .prose h3 {
+      font-size: 1.2rem;
+    }
 
-  .prose hr {
-    border: 0;
-    height: 1px;
-    background: var(--line);
-    margin: 2.75em 0;
-  }
+    .prose h4 {
+      font-size: 1.04rem;
+    }
 
-  .prose :not(pre) > code {
-    font-family: var(--mono);
-    font-size: 0.86em;
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-    border-radius: 5px;
-    padding: 0.12em 0.36em;
-    direction: ltr;
-    unicode-bidi: isolate;
-  }
+    .prose h5,
+    .prose h6 {
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
 
-  .prose pre {
-    font-family: var(--mono);
-    font-size: 0.875rem;
-    line-height: 1.62;
-    margin: 1.5em 0;
-    padding: 1rem 1.1rem;
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    tab-size: 2;
-    direction: ltr;
-    text-align: left;
-  }
-  .prose pre code {
-    font-family: inherit;
-    font-size: inherit;
-    background: none;
-    border: 0;
-    padding: 0;
-    color: inherit;
-  }
+    .prose a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
 
-  .code-wrap { position: relative; margin: 1.5em 0; direction: ltr !important; }
-  .code-wrap pre { margin: 0; }
+    .prose a:hover {
+      text-decoration-thickness: 2px;
+    }
 
-  .copy {
-    position: absolute;
-    top: 0.5rem;
-    inset-inline-end: 0.5rem;
-    font-family: var(--sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    padding: 0.3rem 0.55rem;
-    border: 1px solid var(--line);
-    border-radius: 7px;
-    background: var(--card);
-    color: var(--muted);
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity .15s ease, color .15s ease, border-color .15s ease;
-  }
-  .code-wrap:hover .copy,
-  .copy:focus-visible { opacity: 1; }
-  .copy:hover { color: var(--fg); border-color: var(--muted); }
-  @media (hover: none) { .copy { opacity: 1; } }
+    .prose strong {
+      font-weight: 650;
+    }
 
-  .table-wrap { margin: 1.6em 0; overflow-x: auto; }
-  .table-wrap table { margin: 0; min-width: 100%; }
+    .prose em {
+      font-style: italic;
+    }
 
-  .prose table {
-    border-collapse: collapse;
-    font-family: var(--sans);
-    font-size: 0.94em;
-    line-height: 1.5;
-  }
-  .prose th, .prose td {
-    padding: 0.55em 0.85em;
-    border: 1px solid var(--line);
-    text-align: start;
-  }
-  .prose th { background: var(--code-bg); font-weight: 650; }
+    .prose ul,
+    .prose ol {
+      margin: 1.1em 0;
+      padding-inline-start: 1.45em;
+    }
 
-  .prose img {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin: 1.6em auto;
-    border-radius: 10px;
-  }
+    /* localized ordered-list digits (Persian-style: fa, ur, ps, sd; Arabic-Indic: ar) */
+    .prose:lang(fa) ol,
+    .prose:lang(ur) ol,
+    .prose:lang(ps) ol,
+    .prose:lang(sd) ol {
+      list-style-type: fa-digits;
+    }
 
-  .prose figure { margin: 1.6em 0; }
-  .prose figcaption {
-    margin-top: 0.6em;
-    font-family: var(--sans);
-    font-size: 0.82rem;
-    text-align: center;
-    color: var(--muted);
-  }
+    .prose:lang(ar) ol {
+      list-style-type: ar-digits;
+    }
 
-  .prose kbd {
-    font-family: var(--mono);
-    font-size: 0.8em;
-    padding: 0.1em 0.4em;
-    border: 1px solid var(--line);
-    border-bottom-width: 2px;
-    border-radius: 5px;
-    background: var(--code-bg);
-    direction: ltr;
-    unicode-bidi: isolate;
-  }
+    .prose li {
+      margin: 0.35em 0;
+    }
 
-  .prose mark {
-    background: var(--accent-soft);
-    color: inherit;
-    padding: 0.05em 0.2em;
-    border-radius: 3px;
-  }
+    .prose li::marker {
+      color: var(--muted);
+    }
 
-  /* =========================================================
+    .prose li>ul,
+    .prose li>ol {
+      margin: 0.35em 0;
+    }
+
+    .prose blockquote {
+      margin: 1.6em 0;
+      padding-block: 0.15em;
+      padding-inline-start: 1.15em;
+      border-inline-start: 3px solid var(--accent);
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .prose blockquote p {
+      margin: 0.5em 0;
+    }
+
+    .prose hr {
+      border: 0;
+      height: 1px;
+      background: var(--line);
+      margin: 2.75em 0;
+    }
+
+    .prose :not(pre)>code {
+      font-family: var(--mono);
+      font-size: 0.86em;
+      background: var(--code-bg);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 0.12em 0.36em;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .prose pre {
+      font-family: var(--mono);
+      font-size: 0.875rem;
+      line-height: 1.62;
+      margin: 1.5em 0;
+      padding: 1rem 1.1rem;
+      background: var(--code-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      tab-size: 2;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .prose pre code {
+      font-family: inherit;
+      font-size: inherit;
+      background: none;
+      border: 0;
+      padding: 0;
+      color: inherit;
+    }
+
+    /* ---------- KaTeX math: ALWAYS left-to-right ---------- */
+    .prose .katex,
+    .prose .katex-display,
+    .prose .katex * {
+      direction: ltr;
+      text-align: left;
+    }
+
+    .prose .katex,
+    .prose .katex-display {
+      unicode-bidi: isolate;
+    }
+
+    .prose .katex {
+      font-size: 1.05em;
+    }
+
+    .prose .katex-display {
+      margin: 1.15em 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.15em 0;
+      text-align: center;
+    }
+
+    .prose .katex-display>.katex {
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* Persian/Arabic glyph fallback inside KaTeX \text{} */
+    .katex .text,
+    .katex .mord.text {
+      font-family: KaTeX_Main, "Vazirmatn", "Noto Naskh Arabic", "Noto Sans Arabic", Tahoma, serif;
+    }
+
+    .code-wrap {
+      position: relative;
+      margin: 1.5em 0;
+      direction: ltr !important;
+    }
+
+    .code-wrap pre {
+      margin: 0;
+    }
+
+    .copy {
+      position: absolute;
+      top: 0.5rem;
+      inset-inline-end: 0.5rem;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--card);
+      color: var(--muted);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity .15s ease, color .15s ease, border-color .15s ease;
+    }
+
+    .code-wrap:hover .copy,
+    .copy:focus-visible {
+      opacity: 1;
+    }
+
+    .copy:hover {
+      color: var(--fg);
+      border-color: var(--muted);
+    }
+
+    @media (hover: none) {
+      .copy {
+        opacity: 1;
+      }
+    }
+
+    .table-wrap {
+      margin: 1.6em 0;
+      overflow-x: auto;
+    }
+
+    .table-wrap table {
+      margin: 0;
+      min-width: 100%;
+    }
+
+    .prose table {
+      border-collapse: collapse;
+      font-family: var(--sans);
+      font-size: 0.94em;
+      line-height: 1.5;
+    }
+
+    .prose th,
+    .prose td {
+      padding: 0.55em 0.85em;
+      border: 1px solid var(--line);
+      text-align: start;
+    }
+
+    .prose th {
+      background: var(--code-bg);
+      font-weight: 650;
+    }
+
+    .prose img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 1.6em auto;
+      border-radius: 10px;
+    }
+
+    .prose figure {
+      margin: 1.6em 0;
+    }
+
+    .prose figcaption {
+      margin-top: 0.6em;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .prose kbd {
+      font-family: var(--mono);
+      font-size: 0.8em;
+      padding: 0.1em 0.4em;
+      border: 1px solid var(--line);
+      border-bottom-width: 2px;
+      border-radius: 5px;
+      background: var(--code-bg);
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .prose mark {
+      background: var(--accent-soft);
+      color: inherit;
+      padding: 0.05em 0.2em;
+      border-radius: 3px;
+    }
+
+    /* =========================================================
      STATES
      ========================================================= */
-  .status, .notice {
-    font-family: var(--sans);
-    color: var(--muted);
-    font-size: 0.95rem;
-  }
-  .notice h1, .notice h2 {
-    font-family: var(--serif);
-    color: var(--fg);
-    margin: 0 0 0.5rem;
-    font-size: 1.4rem;
-  }
-  .notice code {
-    font-family: var(--mono);
-    font-size: 0.85em;
-    background: var(--code-bg);
-    border: 1px solid var(--line);
-    border-radius: 5px;
-    padding: 0.1em 0.35em;
-  }
+    .status,
+    .notice {
+      font-family: var(--sans);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
 
-  /* =========================================================
+    .notice h1,
+    .notice h2 {
+      font-family: var(--serif);
+      color: var(--fg);
+      margin: 0 0 0.5rem;
+      font-size: 1.4rem;
+    }
+
+    .notice code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--code-bg);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 0.1em 0.35em;
+    }
+
+    /* =========================================================
      PRINT
      ========================================================= */
-  @media print {
-    .theme-btn, .back, .copy, .lang-switch, .view-switch { display: none !important; }
-    body { background: #fff; color: #000; }
-    .wrap { max-width: none; padding: 0; }
-    .prose a { color: inherit; }
-    .hero { border: 0; }
-  }
-</style>
+    @media print {
+
+      .theme-btn,
+      .back,
+      .copy,
+      .lang-switch,
+      .view-switch {
+        display: none !important;
+      }
+
+      body {
+        background: #fff;
+        color: #000;
+      }
+
+      .wrap {
+        max-width: none;
+        padding: 0;
+      }
+
+      .prose a {
+        color: inherit;
+      }
+
+      .hero {
+        border: 0;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="wrap">
-  <header id="header" class="site-head"></header>
-  <main id="app"></main>
-</div>
+  <div class="wrap">
+    <header id="header" class="site-head"></header>
+    <main id="app"></main>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-<script>
-/* =========================================================
-   CONFIG
-   ========================================================= */
-const SITE = {
-  title: 'Abolfazl Rajaee',
-  description: 'Essays, notes, and things I figure out.',
-};
+  <script type="module">
+    /* =========================================================
+       LOAD MARKDOWN + KATEX
+       ========================================================= */
+    let marked, katex;
+    try {
+      const [markedMod, katexMod] = await Promise.all([
+        import('https://cdn.jsdelivr.net/npm/marked@12.0.2/+esm'),
+        import('https://cdn.jsdelivr.net/npm/katex@0.16.11/+esm'),
+      ]);
+      marked = markedMod.marked;
+      katex = katexMod.default;
+      window.marked = marked;
+      window.katex = katex;
+    } catch (err) {
+      console.error('Failed to load markdown/katex:', err);
+    }
 
-const ARTICLES_BASE = 'articles';   // must match ARTICLES_BASE in build.js
+    /* =========================================================
+       CONFIG
+       ========================================================= */
+    const SITE = {
+      title: 'Abolfazl Rajaee',
+      description: 'Essays, notes, and things I figure out.',
+    };
 
-/* =========================================================
-   ICONS
-   ========================================================= */
-const ICON_LIST = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+    const ARTICLES_BASE = 'articles';   // must match ARTICLES_BASE in build.js
+
+    /* =========================================================
+       ICONS
+       ========================================================= */
+    const ICON_LIST = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
   <path d="M9 6h11M9 12h11M9 18h11"/>
   <circle cx="4.4" cy="6" r="1.3" fill="currentColor" stroke="none"/>
   <circle cx="4.4" cy="12" r="1.3" fill="currentColor" stroke="none"/>
   <circle cx="4.4" cy="18" r="1.3" fill="currentColor" stroke="none"/>
 </svg>`;
 
-const ICON_GRID = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+    const ICON_GRID = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
   <rect x="3.6" y="3.6" width="7" height="7" rx="1.6"/>
   <rect x="13.4" y="3.6" width="7" height="7" rx="1.6"/>
   <rect x="3.6" y="13.4" width="7" height="7" rx="1.6"/>
   <rect x="13.4" y="13.4" width="7" height="7" rx="1.6"/>
 </svg>`;
 
-/* simple "photo" placeholder for articles without a hero image */
-const PHOTO_SVG = `<svg class="thumb-icon" viewBox="0 0 24 24" fill="none"
+    const PHOTO_SVG = `<svg class="thumb-icon" viewBox="0 0 24 24" fill="none"
   stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
   aria-hidden="true" focusable="false">
   <rect x="3" y="4.5" width="18" height="15" rx="2.5"/>
@@ -727,137 +981,251 @@ const PHOTO_SVG = `<svg class="thumb-icon" viewBox="0 0 24 24" fill="none"
   <path d="M20.5 16.2l-4.7-4.7-6.1 6.1"/>
 </svg>`;
 
-/* =========================================================
-   HELPERS
-   ========================================================= */
-const app    = document.getElementById('app');
-const header = document.getElementById('header');
-header.dir = 'ltr';
+    /* =========================================================
+       HELPERS
+       ========================================================= */
+    const app = document.getElementById('app');
+    const header = document.getElementById('header');
+    header.dir = 'ltr';
 
-const esc = s => String(s ?? '').replace(/[&<>"']/g,
-  c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+    const esc = s => String(s ?? '').replace(/[&<>"']/g,
+      c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-// build.js stores hero paths relative to the article folder — prepend base
-function heroSrc(p) {
-  if (!p) return null;
-  return /^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(p) ? p : `${ARTICLES_BASE}/${p}`;
-}
+    function heroSrc(p) {
+      if (!p) return null;
+      return /^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(p) ? p : `${ARTICLES_BASE}/${p}`;
+    }
 
-function fmtDate(iso) {
-  if (!iso) return '';
-  const s = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? iso + 'T00:00:00' : iso;
-  const d = new Date(s);
-  return isNaN(d) ? iso
-    : d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-}
+    function fmtDate(iso) {
+      if (!iso) return '';
+      const s = /^\d{4}-\d{2}-\d{2}$/.test(iso) ? iso + 'T00:00:00' : iso;
+      const d = new Date(s);
+      return isNaN(d) ? iso
+        : d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+    }
 
-let cache = null;
-async function getArticles() {
-  if (cache) return cache;
-  const res = await fetch('articles.json', { cache: 'no-cache' });
-  if (!res.ok) throw new Error(`articles.json → HTTP ${res.status}`);
-  cache = await res.json();
-  return cache;
-}
+    let cache = null;
+    async function getArticles() {
+      if (cache) return cache;
+      const res = await fetch('articles.json', { cache: 'no-cache' });
+      if (!res.ok) throw new Error(`articles.json → HTTP ${res.status}`);
+      cache = await res.json();
+      return cache;
+    }
 
-function setMeta(name, content) {
-  if (!content) return;
-  const isOg = name.startsWith('og:');
-  const sel  = isOg ? `meta[property="${name}"]` : `meta[name="${name}"]`;
-  let el = document.querySelector(sel);
-  if (!el) {
-    el = document.createElement('meta');
-    el.setAttribute(isOg ? 'property' : 'name', name);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('content', content);
-}
+    function setMeta(name, content) {
+      if (!content) return;
+      const isOg = name.startsWith('og:');
+      const sel = isOg ? `meta[property="${name}"]` : `meta[name="${name}"]`;
+      let el = document.querySelector(sel);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(isOg ? 'property' : 'name', name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    }
 
-function langName(code) {
-  try {
-    const dn = new Intl.DisplayNames([navigator.language || 'en'], { type: 'language' });
-    return dn.of(code) || code;
-  } catch (_) { return code; }
-}
+    function langName(code) {
+      try {
+        const dn = new Intl.DisplayNames([navigator.language || 'en'], { type: 'language' });
+        return dn.of(code) || code;
+      } catch (_) { return code; }
+    }
 
-/* =========================================================
-   THEME
-   ========================================================= */
-const THEME_ICON  = { auto: '◐', dark: '☾', light: '☀' };
-const THEME_LABEL = { auto: 'Theme: auto (follows system)', dark: 'Theme: dark', light: 'Theme: light' };
+    /* =========================================================
+       MATH PIPELINE
+       ---------------------------------------------------------
+       Match order (first alternative wins at a position):
+         1 code (fences of 3+ ` or ~, double/single backtick spans)
+         2 escaped dollar  \$
+         3 $$ … $$
+         4 \[ … \]
+         5 \( … \)
+         6 $ … $   (no space after opening / before closing,
+                    closing not followed by a digit, may span a
+                    soft line break but not a blank line)
+       Math → KaTeX HTML → placeholder → restored after marked.
+       Persian/Arabic digits inside TeX are wrapped in \text{}.
+       ========================================================= */
+    const FA_DIGITS = '۰۱۲۳۴۵۶۷۸۹';
+    const AR_DIGITS = '٠١٢٣٤٥٦٧٨٩';
 
-function currentTheme() {
-  return document.documentElement.dataset.theme || 'auto';
-}
+    // Wrap non-ASCII digit runs in \text{} unless already inside a text group
+    function texDigits(tex) {
+      const stack = [];
+      return tex.replace(
+        /(\\[{}])|(\\(?:text|textrm|textbf|textit|mbox)\s*\{)|(\{)|(\})|([۰-۹٠-٩]+)/g,
+        (m, escd, txt, open, close, run) => {
+          if (escd) return m;
+          if (txt) { stack.push(true); return m; }
+          if (open) { stack.push(false); return m; }
+          if (close) { stack.pop(); return m; }
+          return stack.includes(true) ? m : `\\text{${run}}`;
+        });
+    }
 
-function applyTheme(t) {
-  if (t === 'auto') {
-    delete document.documentElement.dataset.theme;
-    try { localStorage.removeItem('theme'); } catch (_) {}
-  } else {
-    document.documentElement.dataset.theme = t;
-    try { localStorage.setItem('theme', t); } catch (_) {}
-  }
-  syncThemeButtons();
-}
+    // ۱. / ١) / … at line start → ASCII so marked sees a real list.
+    function fixPersianListMarkers(text) {
+      return text.replace(/^([ \t]{0,3})([۰-۹٠-٩]+)([.)])(?=\s|$)/gm,
+        (_, ws, num, dot) => {
+          const ascii = num
+            .replace(/[۰-۹]/g, d => String(FA_DIGITS.indexOf(d)))
+            .replace(/[٠-٩]/g, d => String(AR_DIGITS.indexOf(d)));
+          return ws + ascii + dot;
+        });
+    }
 
-function cycleTheme() {
-  const cur = currentTheme();
-  applyTheme(cur === 'auto' ? 'dark' : cur === 'dark' ? 'light' : 'auto');
-}
+    // Only treat the slice start as a line start when it really is one
+    function fixListMarkersSafe(text, atLineStart) {
+      if (atLineStart) return fixPersianListMarkers(text);
+      const i = text.indexOf('\n');
+      if (i === -1) return text;
+      return text.slice(0, i) + fixPersianListMarkers(text.slice(i));
+    }
 
-function syncThemeButtons() {
-  const t = currentTheme();
-  document.querySelectorAll('[data-theme-btn]').forEach(btn => {
-    btn.textContent = THEME_ICON[t];
-    btn.title = THEME_LABEL[t];
-    btn.setAttribute('aria-label', THEME_LABEL[t]);
-  });
-}
+    const MATH_RE = new RegExp([
+      /(`{3,}[\s\S]*?`{3,}|~{3,}[\s\S]*?~{3,}|``[^\n]*?``|`[^`\n]+`)/.source,        // 1 code
+      /(\\\$)/.source,                                                                // 2 escaped $
+      /(\$\$[\s\S]+?\$\$)/.source,                                                    // 3 $$…$$
+      /(\\\[[\s\S]+?\\\])/.source,                                                    // 4 \[…\]
+      /(\\\([\s\S]+?\\\))/.source,                                                    // 5 \(…\)
+      /(\$(?![\s$])(?:\\.|[^$\\\n]|\n(?![ \t]*\n))+?(?<![\s\\])\$(?!\d))/.source      // 6 $…$
+    ].join('|'), 'g');
 
-/* =========================================================
-   VIEW MODE  (list | grid)
-   ========================================================= */
-const VIEW_KEY = 'view';
+    function extractMathAndFixDigits(md) {
+      const store = [];
+      const re = new RegExp(MATH_RE.source, 'g');
 
-function currentView() {
-  try {
-    const v = localStorage.getItem(VIEW_KEY);
-    if (v === 'grid' || v === 'list') return v;
-  } catch (_) {}
-  return 'list';
-}
+      let out = '';
+      let last = 0;
+      let m;
 
-function setView(v) {
-  if (v !== 'grid' && v !== 'list') return;
-  try { localStorage.setItem(VIEW_KEY, v); } catch (_) {}
-  syncViewButtons();
-  // re-render only the index (article pages don't show the switch)
-  if (!new URLSearchParams(location.search).get('q')) renderIndex();
-}
+      while ((m = re.exec(md)) !== null) {
+        const [whole, code, escDollar, dd, br, par, inl] = m;
+        const before = md.slice(last, m.index);
+        const atLineStart = last === 0 || md[last - 1] === '\n';
+        out += fixListMarkersSafe(before, atLineStart);
 
-function syncViewButtons() {
-  const v = currentView();
-  document.querySelectorAll('[data-view]').forEach(btn => {
-    const on = btn.dataset.view === v;
-    btn.classList.toggle('is-active', on);
-    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    btn.title = btn.dataset.view === 'grid' ? 'Grid view' : 'List view';
-    btn.setAttribute('aria-label', btn.title);
-  });
-}
+        if (code || escDollar) {
+          out += whole;
+        } else {
+          const display = !!(dd || br);
+          let tex = dd ? dd.slice(2, -2)
+            : br ? br.slice(2, -2)
+              : par ? par.slice(2, -2)
+                : inl.slice(1, -1);
+          // strip blockquote markers left inside multi-line math
+          tex = tex.replace(/^[ \t]*>[ \t]?/gm, '');
+          tex = texDigits(tex.trim());
 
-/* =========================================================
-   HEADER
-   ========================================================= */
-function renderHeader(withDescription, opts = {}) {
-  const showViewSwitch = !!opts.viewToggle;
+          let html;
+          try {
+            html = katex.renderToString(tex, {
+              displayMode: display,
+              throwOnError: false,
+              strict: 'ignore',
+            });
+          } catch (_) {
+            html = esc(whole);
+          }
+          out += `MATHPH${store.length}END`;
+          store.push(html);
+        }
 
-  header.innerHTML = `
+        last = m.index + whole.length;
+      }
+
+      out += fixListMarkersSafe(md.slice(last), last === 0 || md[last - 1] === '\n');
+      return { md: out, store };
+    }
+
+    function restoreMath(html, store) {
+      return html
+        .replace(/<p>\s*MATHPH(\d+)END\s*<\/p>/g, (_, i) => store[+i])
+        .replace(/MATHPH(\d+)END/g, (_, i) => store[+i]);
+    }
+
+    /* =========================================================
+       THEME
+       ========================================================= */
+    const THEME_ICON = { auto: '◐', dark: '☾', light: '☀' };
+    const THEME_LABEL = { auto: 'Theme: auto (follows system)', dark: 'Theme: dark', light: 'Theme: light' };
+
+    function currentTheme() {
+      return document.documentElement.dataset.theme || 'auto';
+    }
+
+    function applyTheme(t) {
+      if (t === 'auto') {
+        delete document.documentElement.dataset.theme;
+        try { localStorage.removeItem('theme'); } catch (_) { }
+      } else {
+        document.documentElement.dataset.theme = t;
+        try { localStorage.setItem('theme', t); } catch (_) { }
+      }
+      syncThemeButtons();
+    }
+
+    function cycleTheme() {
+      const cur = currentTheme();
+      applyTheme(cur === 'auto' ? 'dark' : cur === 'dark' ? 'light' : 'auto');
+    }
+
+    function syncThemeButtons() {
+      const t = currentTheme();
+      document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+        btn.textContent = THEME_ICON[t];
+        btn.title = THEME_LABEL[t];
+        btn.setAttribute('aria-label', THEME_LABEL[t]);
+      });
+    }
+
+    /* =========================================================
+       VIEW MODE  (list | grid)
+       ========================================================= */
+    const VIEW_KEY = 'view';
+
+    function currentView() {
+      try {
+        const v = localStorage.getItem(VIEW_KEY);
+        if (v === 'grid' || v === 'list') return v;
+      } catch (_) { }
+      return 'list';
+    }
+
+    function setView(v) {
+      if (v !== 'grid' && v !== 'list') return;
+      try { localStorage.setItem(VIEW_KEY, v); } catch (_) { }
+      syncViewButtons();
+      if (!new URLSearchParams(location.search).get('q')) renderIndex();
+    }
+
+    function syncViewButtons() {
+      const v = currentView();
+      document.querySelectorAll('[data-view]').forEach(btn => {
+        const on = btn.dataset.view === v;
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.title = btn.dataset.view === 'grid' ? 'Grid view' : 'List view';
+        btn.setAttribute('aria-label', btn.title);
+      });
+    }
+
+    window.setView = setView;
+    window.cycleTheme = cycleTheme;
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+    function renderHeader(withDescription, opts = {}) {
+      const showViewSwitch = !!opts.viewToggle;
+
+      header.innerHTML = `
     <div>
       <a class="brand" href="./">${esc(SITE.title)}</a>
       ${withDescription && SITE.description
-        ? `<p class="site-desc">${esc(SITE.description)}</p>` : ''}
+          ? `<p class="site-desc">${esc(SITE.description)}</p>` : ''}
     </div>
     <div class="head-controls">
       ${showViewSwitch ? `
@@ -871,71 +1239,70 @@ function renderHeader(withDescription, opts = {}) {
     </div>
   `;
 
-  syncThemeButtons();
-  if (showViewSwitch) syncViewButtons();
-}
+      syncThemeButtons();
+      if (showViewSwitch) syncViewButtons();
+    }
 
-/* =========================================================
-   LANGUAGE PICKING
-   ========================================================= */
-function pickLang(item, requested) {
-  if (requested && item.meta[requested]) return requested;
+    /* =========================================================
+       LANGUAGE PICKING
+       ========================================================= */
+    function pickLang(item, requested) {
+      if (requested && item.meta[requested]) return requested;
 
-  try {
-    const stored = localStorage.getItem('lang');
-    if (stored && item.meta[stored]) return stored;
-  } catch (_) {}
+      try {
+        const stored = localStorage.getItem('lang');
+        if (stored && item.meta[stored]) return stored;
+      } catch (_) { }
 
-  const nav = (navigator.language || '').split('-')[0].toLowerCase();
-  if (nav && item.meta[nav]) return nav;
+      const nav = (navigator.language || '').split('-')[0].toLowerCase();
+      if (nav && item.meta[nav]) return nav;
 
-  return item.defaultLang;
-}
+      return item.defaultLang;
+    }
 
-function resetDir() {
-  document.documentElement.lang = 'en';
-  document.documentElement.dir  = 'ltr';
-}
+    function resetDir() {
+      document.documentElement.lang = 'en';
+      document.documentElement.dir = 'ltr';
+    }
 
-/* =========================================================
-   INDEX
-   ========================================================= */
-async function renderIndex() {
-  renderHeader(true, { viewToggle: true });
-  resetDir();
-  document.title = SITE.title;
-  setMeta('description', SITE.description);
+    /* =========================================================
+       INDEX
+       ========================================================= */
+    async function renderIndex() {
+      renderHeader(true, { viewToggle: true });
+      resetDir();
+      document.title = SITE.title;
+      setMeta('description', SITE.description);
 
-  if (!cache) app.innerHTML = `<p class="status">Loading…</p>`;
+      if (!cache) app.innerHTML = `<p class="status">Loading…</p>`;
 
-  try {
-    const items = await getArticles();
+      try {
+        const items = await getArticles();
 
-    if (!items.length) {
-      app.innerHTML = `<p class="status">No articles yet. Create a folder
+        if (!items.length) {
+          app.innerHTML = `<p class="status">No articles yet. Create a folder
         inside <code>${esc(ARTICLES_BASE)}/</code> with one or more language files
         (e.g. <code>en.md</code>, <code>fa.md</code>), then run
         <code>node build.js</code>.</p>`;
-      return;
+          return;
+        }
+
+        if (currentView() === 'grid') {
+          app.innerHTML = gridHtml(items);
+          attachThumbFallbacks();
+        } else {
+          app.innerHTML = listHtml(items);
+        }
+      } catch (err) {
+        showError(err);
+      }
     }
 
-    if (currentView() === 'grid') {
-      app.innerHTML = gridHtml(items);
-      attachThumbFallbacks();
-    } else {
-      app.innerHTML = listHtml(items);
-    }
-  } catch (err) {
-    showError(err);
-  }
-}
-
-/* ---------- list view ---------- */
-function listHtml(items) {
-  return `<ul class="post-list">${items.map(item => {
-    const lang = pickLang(item, null);
-    const m    = item.meta[lang];
-    return `
+    function listHtml(items) {
+      return `<ul class="post-list">${items.map(item => {
+        const lang = pickLang(item, null);
+        const m = item.meta[lang];
+        return `
       <li>
         <a class="post" href="?q=${encodeURIComponent(item.slug)}">
           <h2 class="post-title" lang="${esc(lang)}" dir="${esc(m.dir)}">${esc(m.title)}</h2>
@@ -950,23 +1317,22 @@ function listHtml(items) {
             : ''}
         </a>
       </li>`;
-  }).join('')}</ul>`;
-}
+      }).join('')}</ul>`;
+    }
 
-/* ---------- grid view (instagram-ish) ---------- */
-function gridHtml(items) {
-  return `<ul class="post-grid">${items.map(item => {
-    const lang = pickLang(item, null);
-    const m    = item.meta[lang];
-    const src  = heroSrc(m.hero);
+    function gridHtml(items) {
+      return `<ul class="post-grid">${items.map(item => {
+        const lang = pickLang(item, null);
+        const m = item.meta[lang];
+        const src = heroSrc(m.hero);
 
-    const thumb = src
-      ? `<div class="thumb">
+        const thumb = src
+          ? `<div class="thumb">
            <img src="${esc(src)}" alt="" loading="lazy" decoding="async">
          </div>`
-      : `<div class="thumb thumb-empty" aria-hidden="true">${PHOTO_SVG}</div>`;
+          : `<div class="thumb thumb-empty" aria-hidden="true">${PHOTO_SVG}</div>`;
 
-    return `
+        return `
       <li>
         <a class="post-card" href="?q=${encodeURIComponent(item.slug)}"
            title="${esc(m.title)}">
@@ -974,75 +1340,75 @@ function gridHtml(items) {
           <div class="card-body">
             <h2 class="post-title" lang="${esc(lang)}" dir="${esc(m.dir)}">${esc(m.title)}</h2>
             ${item.date
-              ? `<time class="post-date" datetime="${esc(item.date)}">${esc(fmtDate(item.date))}</time>`
-              : ''}
+            ? `<time class="post-date" datetime="${esc(item.date)}">${esc(fmtDate(item.date))}</time>`
+            : ''}
           </div>
         </a>
       </li>`;
-  }).join('')}</ul>`;
-}
-
-/* if a hero image 404s, degrade gracefully to the placeholder */
-function attachThumbFallbacks() {
-  app.querySelectorAll('.post-card .thumb img').forEach(img => {
-    img.addEventListener('error', () => {
-      const thumb = img.closest('.thumb');
-      if (!thumb) return;
-      thumb.classList.add('thumb-empty');
-      thumb.setAttribute('aria-hidden', 'true');
-      thumb.innerHTML = PHOTO_SVG;
-    }, { once: true });
-  });
-}
-
-/* =========================================================
-   ARTICLE
-   ========================================================= */
-async function renderArticle(slug, requestedLang) {
-  renderHeader(false);
-  app.innerHTML = `<p class="status">Loading…</p>`;
-
-  try {
-    if (typeof marked === 'undefined') {
-      throw new Error('Markdown renderer failed to load (offline?)');
+      }).join('')}</ul>`;
     }
 
-    const items = await getArticles();
-    const item  = items.find(a => a.slug === slug);
-    if (!item) return notFound(slug);
+    function attachThumbFallbacks() {
+      app.querySelectorAll('.post-card .thumb img').forEach(img => {
+        img.addEventListener('error', () => {
+          const thumb = img.closest('.thumb');
+          if (!thumb) return;
+          thumb.classList.add('thumb-empty');
+          thumb.setAttribute('aria-hidden', 'true');
+          thumb.innerHTML = PHOTO_SVG;
+        }, { once: true });
+      });
+    }
 
-    const lang = pickLang(item, requestedLang);
-    const meta = item.meta[lang];
-    if (!meta) throw new Error(`No metadata for language "${lang}"`);
+    /* =========================================================
+       ARTICLE
+       ========================================================= */
+    async function renderArticle(slug, requestedLang) {
+      renderHeader(false);
+      app.innerHTML = `<p class="status">Loading…</p>`;
 
-    document.documentElement.lang = lang;
-    document.documentElement.dir  = meta.dir || 'ltr';
+      try {
+        if (typeof marked === 'undefined' || typeof katex === 'undefined') {
+          throw new Error('Markdown/math renderers failed to load (offline?)');
+        }
 
-    // ↓ article folder is under ARTICLES_BASE/
-    const folderPath = `${ARTICLES_BASE}/${encodeURIComponent(item.dir)}`;
-    const path       = `${folderPath}/${encodeURIComponent(lang)}.md`;
+        const items = await getArticles();
+        const item = items.find(a => a.slug === slug);
+        if (!item) return notFound(slug);
 
-    const res = await fetch(path);
-    if (!res.ok) throw new Error(`${path} → HTTP ${res.status}`);
+        const lang = pickLang(item, requestedLang);
+        const meta = item.meta[lang];
+        if (!meta) throw new Error(`No metadata for language "${lang}"`);
 
-    // strip front matter, then a leading "# Title" (we render the title ourselves)
-    const md = (await res.text())
-      .replace(/^---\r?\n[\s\S]*?\r?\n---[ \t]*(?:\r?\n|$)/, '')
-      .replace(/^\s*#\s+[^\n]*(?:\n+|$)/, '');
+        document.documentElement.lang = lang;
+        document.documentElement.dir = meta.dir || 'ltr';
 
-    const words = md.trim().split(/\s+/).filter(Boolean).length;
-    const mins  = Math.max(1, Math.round(words / 220));
+        const folderPath = `${ARTICLES_BASE}/${encodeURIComponent(item.dir)}`;
+        const path = `${folderPath}/${encodeURIComponent(lang)}.md`;
 
-    const heroUrl = heroSrc(meta.hero);
+        const res = await fetch(path);
+        if (!res.ok) throw new Error(`${path} → HTTP ${res.status}`);
 
-    document.title = `${meta.title} — ${SITE.title}`;
-    setMeta('description', meta.excerpt || '');
-    setMeta('og:type', 'article');
-    setMeta('og:title', meta.title);
-    setMeta('og:description', meta.excerpt || '');
-    if (heroUrl) setMeta('og:image', new URL(heroUrl, location.href).href);
+        const mdRaw = (await res.text())
+          .replace(/^---\r?\n[\s\S]*?\r?\n---[ \t]*(?:\r?\n|$)/, '')
+          .replace(/^\s*#\s+[^\n]*(?:\n+|$)/, '');
 
-    const heroHtml = heroUrl ? `
+        const words = mdRaw.trim().split(/\s+/).filter(Boolean).length;
+        const mins = Math.max(1, Math.round(words / 220));
+
+        const { md: mdPre, store } = extractMathAndFixDigits(mdRaw);
+        const renderedHtml = restoreMath(marked.parse(mdPre), store);
+
+        const heroUrl = heroSrc(meta.hero);
+
+        document.title = `${meta.title} — ${SITE.title}`;
+        setMeta('description', meta.excerpt || '');
+        setMeta('og:type', 'article');
+        setMeta('og:title', meta.title);
+        setMeta('og:description', meta.excerpt || '');
+        if (heroUrl) setMeta('og:image', new URL(heroUrl, location.href).href);
+
+        const heroHtml = heroUrl ? `
       <figure class="hero">
         <img src="${esc(heroUrl)}"
              alt="${esc(meta.heroAlt || meta.title)}"
@@ -1051,7 +1417,7 @@ async function renderArticle(slug, requestedLang) {
         ${meta.heroCaption ? `<figcaption>${esc(meta.heroCaption)}</figcaption>` : ''}
       </figure>` : '';
 
-    const langNav = item.langs.length > 1 ? `
+        const langNav = item.langs.length > 1 ? `
       <nav class="lang-switch" aria-label="Language">
         ${item.langs.map(l => `
           <a class="lang-pill${l === lang ? ' is-active' : ''}"
@@ -1063,7 +1429,7 @@ async function renderArticle(slug, requestedLang) {
         `).join('')}
       </nav>` : '';
 
-    app.innerHTML = `
+        app.innerHTML = `
       <article>
         <div class="article-top" dir="ltr">
           <a class="back" href="./">
@@ -1080,125 +1446,124 @@ async function renderArticle(slug, requestedLang) {
           </div>
         </header>
         ${heroHtml}
-        <div class="prose" id="prose">${marked.parse(md, { gfm: true, breaks: false })}</div>
+        <div class="prose" id="prose">${renderedHtml}</div>
       </article>`;
 
-    const prose = document.getElementById('prose');
-    absolutize(prose, `${folderPath}/`);
-    enhance(prose);
+        const prose = document.getElementById('prose');
+        absolutize(prose, `${folderPath}/`);
+        enhance(prose);
 
-    document.querySelectorAll('.lang-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        try { localStorage.setItem('lang', pill.getAttribute('hreflang')); } catch (_) {}
-      });
-    });
-  } catch (err) {
-    showError(err);
-  }
-}
-
-/* =========================================================
-   RELATIVE URL FIXUP
-   Inside articles/hello-world/fa.md, "diagram.png" must
-   resolve to articles/hello-world/diagram.png
-   (document URL is /index.html?q=…)
-   ========================================================= */
-const SRC_SEL = 'img[src], video[src], audio[src], iframe[src], source[src], track[src], embed[src]';
-
-function absolutize(root, base) {
-  const external = s => /^(?:[a-z][a-z0-9+.-]*:|\/|\?|#)/i.test(s);
-
-  root.querySelectorAll(SRC_SEL).forEach(el => {
-    const src = el.getAttribute('src');
-    if (!src || external(src)) return;
-    el.setAttribute('src', base + src);
-  });
-
-  root.querySelectorAll('a[href]').forEach(el => {
-    const href = el.getAttribute('href');
-    if (!href || external(href)) return;
-    el.setAttribute('href', base + href);
-  });
-}
-
-/* =========================================================
-   POST-RENDER SUGAR
-   ========================================================= */
-function enhance(root) {
-  root.querySelectorAll('pre').forEach(pre => {
-    const wrap = document.createElement('div');
-    wrap.className = 'code-wrap';
-    pre.replaceWith(wrap);
-    wrap.appendChild(pre);
-
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'copy';
-    btn.textContent = 'Copy';
-    btn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(pre.innerText);
-        btn.textContent = 'Copied';
-      } catch {
-        btn.textContent = 'Failed';
+        document.querySelectorAll('.lang-pill').forEach(pill => {
+          pill.addEventListener('click', () => {
+            try { localStorage.setItem('lang', pill.getAttribute('hreflang')); } catch (_) { }
+          });
+        });
+      } catch (err) {
+        showError(err);
       }
-      setTimeout(() => { btn.textContent = 'Copy'; }, 1400);
-    });
-    wrap.appendChild(btn);
-  });
+    }
 
-  root.querySelectorAll('table').forEach(table => {
-    const wrap = document.createElement('div');
-    wrap.className = 'table-wrap';
-    table.replaceWith(wrap);
-    wrap.appendChild(table);
-  });
+    /* =========================================================
+       RELATIVE URL FIXUP
+       ========================================================= */
+    const SRC_SEL = 'img[src], video[src], audio[src], iframe[src], source[src], track[src], embed[src]';
 
-  root.querySelectorAll('a[href^="http"]').forEach(a => {
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-  });
-}
+    function absolutize(root, base) {
+      const external = s => /^(?:[a-z][a-z0-9+.-]*:|\/|\?|#)/i.test(s);
 
-/* =========================================================
-   STATES
-   ========================================================= */
-function notFound(slug) {
-  resetDir();
-  document.title = `Not found — ${SITE.title}`;
-  app.innerHTML = `
+      root.querySelectorAll(SRC_SEL).forEach(el => {
+        const src = el.getAttribute('src');
+        if (!src || external(src)) return;
+        el.setAttribute('src', base + src);
+      });
+
+      root.querySelectorAll('a[href]').forEach(el => {
+        const href = el.getAttribute('href');
+        if (!href || external(href)) return;
+        el.setAttribute('href', base + href);
+      });
+    }
+
+    /* =========================================================
+       POST-RENDER SUGAR
+       ========================================================= */
+    function enhance(root) {
+      root.querySelectorAll('pre').forEach(pre => {
+        if (pre.querySelector('.katex')) return;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'code-wrap';
+        pre.replaceWith(wrap);
+        wrap.appendChild(pre);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'copy';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(pre.innerText);
+            btn.textContent = 'Copied';
+          } catch {
+            btn.textContent = 'Failed';
+          }
+          setTimeout(() => { btn.textContent = 'Copy'; }, 1400);
+        });
+        wrap.appendChild(btn);
+      });
+
+      root.querySelectorAll('table').forEach(table => {
+        const wrap = document.createElement('div');
+        wrap.className = 'table-wrap';
+        table.replaceWith(wrap);
+        wrap.appendChild(table);
+      });
+
+      root.querySelectorAll('a[href^="http"]').forEach(a => {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      });
+    }
+
+    /* =========================================================
+       STATES
+       ========================================================= */
+    function notFound(slug) {
+      resetDir();
+      document.title = `Not found — ${SITE.title}`;
+      app.innerHTML = `
     <div class="notice">
       <h1>Article not found</h1>
       <p>Nothing matches <code>${esc(slug)}</code>.</p>
       <p><a class="back" href="./"><span class="arrow" aria-hidden="true">←</span>All articles</a></p>
     </div>`;
-}
+    }
 
-function showError(err) {
-  resetDir();
-  app.innerHTML = `
+    function showError(err) {
+      resetDir();
+      app.innerHTML = `
     <div class="notice">
       <h1>Couldn't load</h1>
       <p>${esc(err.message)}</p>
       <p>Serve the folder over HTTP (not <code>file://</code>) and make sure
          <code>articles.json</code> exists — run <code>node build.js</code> to generate it.</p>
     </div>`;
-}
+    }
 
-/* =========================================================
-   BOOT
-   ========================================================= */
-const params = new URLSearchParams(location.search);
-const q      = params.get('q');
-const langQ  = params.get('lang');
+    /* =========================================================
+       BOOT
+       ========================================================= */
+    const params = new URLSearchParams(location.search);
+    const q = params.get('q');
+    const langQ = params.get('lang');
 
-// allow deep-linking a layout: ?view=grid
-const viewQ = params.get('view');
-if (viewQ === 'grid' || viewQ === 'list') {
-  try { localStorage.setItem(VIEW_KEY, viewQ); } catch (_) {}
-}
+    const viewQ = params.get('view');
+    if (viewQ === 'grid' || viewQ === 'list') {
+      try { localStorage.setItem(VIEW_KEY, viewQ); } catch (_) { }
+    }
 
-q ? renderArticle(q, langQ) : renderIndex();
-</script>
+    q ? renderArticle(q, langQ) : renderIndex();
+  </script>
 </body>
+
 </html>
