@@ -118,5 +118,25 @@
         "heroCaption": null
       }
     }
+  },
+  {
+    "slug": "fum-common-math-1",
+    "dir": "fum-common-math-1",
+    "date": null,
+    "defaultLang": "fa",
+    "langs": [
+      "fa"
+    ],
+    "meta": {
+      "fa": {
+        "title": "دستگاه اعداد حقیقی",
+        "excerpt": "اصول موضوعه‌ی جمع، ضرب، توزیع‌پذیری و ترتیب در اعداد حقیقی و خواص مقدماتی آن‌ها (ریاضی عمومی ۱).",
+        "dir": "rtl",
+        "date": null,
+        "hero": null,
+        "heroAlt": null,
+        "heroCaption": null
+      }
+    }
   }
 ]
