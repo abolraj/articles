@@ -385,22 +385,3 @@ The switcher appears only when a folder has **two or more** `xx.md` files. Check
 Made with plain HTML, one `<script>`, and too much coffee. ☕
 
 </div>
-```
-
----
-
-## Notes on the README itself
-
-- **The `.nojekyll` warning is repeated 4 times** (features table, deploy, troubleshooting, and implicitly in the curl check) because it's the single most common reason people give up on this setup. It's the one thing you want people to remember.
-- **Every code block is copy-pasteable** — no "…" placeholders that break real workflows, except where an ellipsis is clearly a content-omission inside a Markdown example.
-- **The features table uses two columns with no header row** — a small aesthetic choice that makes it read as a checklist rather than a boring grid.
-- **Troubleshooting is symptom-first**, not cause-first — people search "404 on pages" before they search "nojekyll", so the symptoms are the headings.
-- **No badges are used.** Shields.io badges would add visual noise and another external dependency; the header does the job with plain text. If you want them anyway, drop this under the title:
-
-```markdown
-[![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-brightgreen)](https://pages.github.com/)
-[![License](https://img.shields.io/badge/license-MIT-blue)](#-license)
-[![No dependencies](https://img.shields.io/badge/dependencies-1%20CDN-orange)](https://marked.js.org/)
-```
-
-Drop the whole thing in as `README.md` at the repo root — GitHub will render it on the project page and it'll be the first thing anyone sees when they find your blog.
