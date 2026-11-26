@@ -1,5 +1,25 @@
 [
   {
+    "slug": "fum-math-1-2-complex",
+    "dir": "fum-math-1-2-complex",
+    "date": "2026-11-26",
+    "defaultLang": "fa",
+    "langs": [
+      "fa"
+    ],
+    "meta": {
+      "fa": {
+        "title": "ادامه‌ی اعداد مختلط؛ نمایش دکارتی، قطبی، مزدوج و قانون دموآور",
+        "excerpt": "سه نمایش عدد مختلط (دکارتی، استاندارد، قطبی)، مزدوج و خواص آن، ضرب و تقسیم در شکل قطبی، قانون دموآور و ریشه‌گیری، همراه با نمودارهای تصویری و ۱۰ مسئله‌ی چالشی",
+        "dir": "rtl",
+        "date": "2026-11-26",
+        "hero": "fum-math-1-2-complex/hero.webp",
+        "heroAlt": null,
+        "heroCaption": null
+      }
+    }
+  },
+  {
     "slug": "fum-math-1-1-complex",
     "dir": "fum-math-1-1-complex",
     "date": "2026-11-24",
